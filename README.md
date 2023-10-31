@@ -1,5 +1,15 @@
 # The Knowledge Bank (PostgreSQL)
 
+## RUN SQL Scripts IN ORDER
+- 01-CreateDatabase.sql
+- 02-Public.sql
+- 03-Auth.sql
+- 04-TheKnowledgeBank.sql
+- 05-StoreKnowledgeBank.sql
+
+## 
+
+## GIT COMMANDS
 - …or create a new repository on the command line
 ```bash
 echo "# test" >> README.md

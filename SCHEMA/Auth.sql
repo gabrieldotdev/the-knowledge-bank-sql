@@ -43,3 +43,60 @@ CREATE TABLE IF NOT EXISTS Auth.User_Roles (
     FOREIGN KEY (UserId) REFERENCES Auth.Users (Id),
     FOREIGN KEY (RoleId) REFERENCES Auth.Roles (Id)
 );
+
+-- Tạo Strigger tự động tạo data cho bảng Role_Permissions
+CREATE OR REPLACE FUNCTION create_role_permissions()
+    RETURNS TRIGGER AS $$
+    BEGIN
+        INSERT INTO Auth.Role_Permissions (RoleId, PermissionId)
+        SELECT NEW.Id, Id FROM Auth.Permissions;
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+CREATE TRIGGER create_role_permissions
+    AFTER INSERT ON Auth.Roles
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_role_permissions();
+-- Tạo Strigger tự động tạo data cho bảng User_Roles
+CREATE OR REPLACE FUNCTION create_user_roles()
+    RETURNS TRIGGER AS $$
+    BEGIN
+        INSERT INTO Auth.User_Roles (UserId, RoleId)
+        SELECT NEW.Id, Id FROM Auth.Roles;
+        RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
+CREATE TRIGGER create_user_roles
+    AFTER INSERT ON Auth.Users
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_user_roles();
+
+-- INSERT DATA
+INSERT INTO Auth.Roles (Name, Description)
+VALUES ('Admin', 'Administrator with full access'),
+    ('User', 'Standard user with basic access'),
+    (
+        'Editor',
+        'Content editor with editing privileges'
+    ),
+    (
+        'Manager',
+        'Manager with managerial responsibilities'
+    ),
+    (
+        'Moderator',
+        'Moderator with content moderation privileges'
+    );
+INSERT INTO Auth.Permissions (Name, Description)
+VALUES ('View', 'Permissions to view content'),
+    ('Create', 'Permissions to create content'),
+    ('Edit', 'Permissions to edit content'),
+    ('Delete', 'Permissions to delete content'),
+    ('Publish', 'Permissions to publish content'),
+    ('Unpublish', 'Permissions to unpublish content'),
+    ('Manage', 'Permissions to manage content'),
+    ('Moderate', 'Permissions to moderate content'),
+    (
+        'Administer',
+        'Permissions to administer content'
+    );

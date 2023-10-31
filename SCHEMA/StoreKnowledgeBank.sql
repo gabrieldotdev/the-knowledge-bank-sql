@@ -28,17 +28,3 @@ CREATE TABLE IF NOT EXISTS StoreKnowledgeBank.Book_Authors (
     FOREIGN KEY (BookId) REFERENCES StoreKnowledgeBank.Books (Id),
     FOREIGN KEY (AuthorId) REFERENCES StoreKnowledgeBank.Authors (Id)
 );
-
--- …or create a new repository on the command line
-echo "# test" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin git@github.com:lilwxs/test.git
-git push -u origin main
-
--- …or push an existing repository from the command line
-git remote add origin git@github.com:lilwxs/test.git
-git branch -M main
-git push -u origin main
