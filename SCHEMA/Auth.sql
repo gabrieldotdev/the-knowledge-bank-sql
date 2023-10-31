@@ -1,0 +1,45 @@
+-- Create table Auth.Roles
+CREATE TABLE IF NOT EXISTS Auth.Roles (
+    Id SERIAL PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Description VARCHAR(255) NOT NULL DEFAULT ''
+);
+-- Create table Auth.Permissions
+CREATE TABLE IF NOT EXISTS Auth.Permissions (
+    Id SERIAL PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Description VARCHAR(255) NOT NULL DEFAULT ''
+);
+-- Create table Auth.Role_Permissions
+CREATE TABLE IF NOT EXISTS Auth.Role_Permissions (
+    Id SERIAL PRIMARY KEY,
+    RoleId INT NOT NULL,
+    PermissionId INT NOT NULL,
+    FOREIGN KEY (RoleId) REFERENCES Auth.Roles (Id),
+    FOREIGN KEY (PermissionId) REFERENCES Auth.Permissions (Id)
+);
+-- Create table Auth.Users
+CREATE TABLE IF NOT EXISTS Auth.Users (
+    Id SERIAL PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    Password VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL UNIQUE,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Avatar VARCHAR(255) NOT NULL DEFAULT '',
+    IsActivated BOOLEAN NOT NULL DEFAULT TRUE,
+    IsStaff BOOLEAN NOT NULL DEFAULT FALSE,
+    IsSuperuser BOOLEAN NOT NULL DEFAULT FALSE,
+    IsVerified BOOLEAN NOT NULL DEFAULT FALSE,
+    PublishedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UpdatedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    LastLogin TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+-- Create table Auth.User_Roles
+CREATE TABLE IF NOT EXISTS Auth.User_Roles (
+    Id SERIAL PRIMARY KEY,
+    UserId INT NOT NULL,
+    RoleId INT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Auth.Users (Id),
+    FOREIGN KEY (RoleId) REFERENCES Auth.Roles (Id)
+);
