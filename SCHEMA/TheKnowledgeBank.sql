@@ -1,7 +1,7 @@
 -- Create table TheKnowledgeBank.Articles
 CREATE TABLE IF NOT EXISTS TheKnowledgeBank.Articles (
     Id SERIAL PRIMARY KEY,
-    Title VARCHAR(50) NOT NULL UNIQUE,
+    Title VARCHAR(50) NOT NULL DEFAULT '',
     Description VARCHAR(255) NOT NULL DEFAULT '',
     Content TEXT NOT NULL,
     PublishedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS TheKnowledgeBank.Articles (
     FOREIGN KEY (CategoryId) REFERENCES Categories (Id),
     FOREIGN KEY (UserId) REFERENCES Auth.Users (Id)
 );
+
 -- Create table TheKnowledgeBank.Article_Tags
 CREATE TABLE IF NOT EXISTS TheKnowledgeBank.Article_Tags (
     Id SERIAL PRIMARY KEY,
