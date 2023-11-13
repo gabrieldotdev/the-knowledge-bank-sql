@@ -27,3 +27,6 @@ git remote add origin git@github.com:<SSH>
 git branch -M main
 git push -u origin main
 ```
+
+pull origin main
+git pull origin main
